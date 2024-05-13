@@ -10,8 +10,8 @@
     const scaleY = scaleLinear().domain([30,60]).range([400,0])
 
     // Rescaling for colouring and radius of circles
-    const scaleColour = scaleLinear().domain([0,17000]).range(["white","white"])
-    const scaleRadius = scaleLinear().domain([0,17000]).range([0,40000])
+    const scaleColour = scaleLinear().domain([0,30000]).range(["white","white"])
+    const scaleRadius = scaleLinear().domain([0,30000]).range([0,20000])
 
     // Define slider default value
     let slider_value2 = 1704063600000;
@@ -76,6 +76,16 @@
 
   text {
       text-align: left;
+  }
+
+  text.Plants {
+      text-align: left;
+      font-weight: bold;
+      font-size:17px;
+      text-shadow: 0 0 5px lightgrey,0 0 5px lightgrey,
+                 0 0 5px lightgrey,0 0 5px lightgrey,
+                 0 0 5px lightgrey,0 0 5px lightgrey,
+                 0 0 5px lightgrey,0 0 5px lightgrey;
   }
 
   .slider {
@@ -196,7 +206,7 @@
     {#each data.inventory as invent}
       {#if invent.PlantKey == datapoint.PlantKey && Number(getDateNumber(invent.Inventory_Month)) == Number(getDateNumber(slider_value2)) && invent.MaterialKey == 1}
         <Pie 
-          size={Math.sqrt(scaleRadius(invent.SalesQuantity_Total)/3.14)} 
+          size={Math.sqrt(scaleRadius(invent.SalesQuantity_Total))} 
           percent={invent.SalesQuantity_Pct} 
           testx={scaleX(datapoint.Longitude)}
           testy={scaleY(datapoint.Latitude)}
@@ -212,6 +222,13 @@
             Sales of car batteries: {invent.SalesQuantity}
             Sales of home batteries: {invent.SalesQuantity_Total - invent.SalesQuantity}
           </title>
+        </text>
+        <text class='Plants'
+          x={scaleX(datapoint.Longitude)-12}
+          y={scaleY(datapoint.Latitude - (Math.sqrt(scaleRadius(invent.SalesQuantity_Total)/150) + 1))}
+          fill="black"
+          font-size="15"
+          >{datapoint.Plant}
         </text>
       {/if}
 
@@ -238,7 +255,7 @@
     {#each data.inventory as invent}
       {#if invent.PlantKey == datapoint.PlantKey && Number(getDateNumber(invent.Inventory_Month)) == Number(getDateNumber(slider_value2)) && invent.MaterialKey == 1}
         <Pie 
-          size={Math.sqrt(scaleRadius(invent.ForecastQuantity_Total)/3.14)} 
+          size={Math.sqrt(scaleRadius(invent.ForecastQuantity_Total))} 
           percent={invent.ForecastQuantity_Pct} 
           testx={scaleX(datapoint.Longitude)}
           testy={scaleY(datapoint.Latitude)}
@@ -254,6 +271,13 @@
             Sales of car batteries: {invent.ForecastQuantity}
             Sales of home batteries: {invent.ForecastQuantity_Total - invent.ForecastQuantity}
           </title>
+        </text>
+        <text class='Plants'
+          x={scaleX(datapoint.Longitude)-12}
+          y={scaleY(datapoint.Latitude - (1 + Math.sqrt(scaleRadius(invent.ForecastQuantity_Total)/150)))}
+          fill="black"
+          font-size="15"
+          >{datapoint.Plant}
         </text>
       {/if}
     {/each}  
@@ -279,11 +303,11 @@
     {#each data.inventory as invent}
       {#if invent.PlantKey == datapoint.PlantKey && Number(getDateNumber(invent.Inventory_Month)) == Number(getDateNumber(slider_value2)) && invent.MaterialKey == 1}
         <Pie 
-          size={Math.sqrt(scaleRadius(invent.ForecastQuantity_Total)/3.14)} 
-          percent={invent.ForecastQuantity_Pct} 
+          size={Math.sqrt(scaleRadius(invent.PurchaseQuantity_Total))} 
+          percent={invent.PurchaseQuantity_Pct} 
           testx={scaleX(datapoint.Longitude)}
           testy={scaleY(datapoint.Latitude)}
-          style={"fill:" + scaleColour(invent.ForecastQuantity_Total)}
+          style={"fill:" + scaleColour(invent.PurchaseQuantity_Total)}
           />
         <text 
           x={scaleX(datapoint.Longitude)-12}
@@ -295,6 +319,13 @@
             Sales of car batteries: {invent.PurchaseQuantity}
             Sales of home batteries: {invent.PurchaseQuantity_Total - invent.PurchaseQuantity}
           </title>
+        </text>
+        <text class='Plants'
+          x={scaleX(datapoint.Longitude)-12}
+          y={scaleY(datapoint.Latitude - (1 + Math.sqrt(scaleRadius(invent.PurchaseQuantity_Total)/150)))}
+          fill="black"
+          font-size="15"
+          >{datapoint.Plant}
         </text>
       {/if}
     {/each}  
@@ -320,7 +351,7 @@
     {#each data.inventory as invent}
       {#if invent.PlantKey == datapoint.PlantKey && Number(getDateNumber(invent.Inventory_Month)) == Number(getDateNumber(slider_value2)) && invent.MaterialKey == 1}
         <Pie 
-          size={Math.sqrt(scaleRadius(invent.OnShelfInventoryQuantity_Total)/3.14)} 
+          size={Math.sqrt(scaleRadius(invent.OnShelfInventoryQuantity_Total))} 
           percent={invent.OnShelfInventoryQuantity_Pct} 
           testx={scaleX(datapoint.Longitude)}
           testy={scaleY(datapoint.Latitude)}
@@ -336,6 +367,13 @@
             Sales of car batteries: {invent.OnShelfInventoryQuantity}
             Sales of home batteries: {invent.OnShelfInventoryQuantity_Total - invent.OnShelfInventoryQuantity}
           </title>
+        </text>
+        <text class='Plants'
+          x={scaleX(datapoint.Longitude)-12}
+          y={scaleY(datapoint.Latitude - (1 + Math.sqrt(scaleRadius(invent.OnShelfInventoryQuantity_Total)/150)))}
+          fill="black"
+          font-size="15"
+          >{datapoint.Plant}
         </text>
       {/if}
     {/each}  
